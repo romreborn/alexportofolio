@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Alex.Dev - Portfolio</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3b82f6",
+                        "primary-dark": "#2563eb",
+                        "primary-glow": "#60a5fa",
+                        "secondary": "#8b5cf6",
+                        "accent": "#06b6d4",
+                        "background-light": "#f0f4f8",
+                        "background-dark": "#0f172a",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1e293b",
+                        "glass-border": "rgba(255, 255, 255, 0.1)",
+                        "glass-surface": "rgba(255, 255, 255, 0.05)",
+                        "glass-bg": "rgba(255, 255, 255, 0.05)",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                        "grotesk": ["Space Grotesk", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "1rem", "2xl": "1.5rem", "3xl": "1.5rem", "full": "9999px"
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'tech-grid': "url(\"data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%233b82f6' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E\")",
+                        'glass-gradient': 'linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))',
+                        'glass-gradient-dark': 'linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.6))',
+                    },
+                    boxShadow: {
+                        'neon': '0 0 5px theme("colors.primary"), 0 0 20px theme("colors.primary-glow")',
+                        'glass': '0 4px 30px rgba(0, 0, 0, 0.1)',
+                        'glow': '0 0 20px rgba(59, 130, 246, 0.15)'
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .glass-panel {
+                @apply bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-white/20 dark:border-slate-700/50 shadow-xl;
+            }
+            .glass-card {
+                @apply bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/30 dark:border-slate-600/30 shadow-lg hover:shadow-primary/20 hover:border-primary/40 transition-all duration-300;
+            }
+            .text-gradient {
+                @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400;
+            }
+            .tech-text-glow {
+                text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            }
+        }
+        
+        body {
+            font-family: "Inter", sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px; /* offset for sticky header */
+        }
+        
+        /* Contact Section Background */
+        .contact-bg {
+             background-image: 
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.15) 0px, transparent 50%);
+        }
+        
+        /* Projects Grid Pattern */
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        /* Skills Tech Grid */
+        .tech-grid-bg {
+            background-image: radial-gradient(circle at 1px 1px, rgba(148, 163, 184, 0.15) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+
+        /* Hero Noise */
+        .bg-noise {
+            background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuCnqVbYEkkincxbT7kcX5FQ7ZcohUPBGz31LUmqib_OgIBcilETRg5dXpK-1aLSf-_81-QJdwxn9R5mulotdAd_nY9l5JBF290Iz1shJMlJA4ZG6PKHkRoTxCb8QQW3omV-nYO72s2xmKb2jJzyhc9OH-Ark7N_Yh1MV_GQNabu3LA9pZFwcDBIkAu92NirnZpIvLNKjqpFwkCFOISyuI7Cu6PXIfapUtLw0_r2feRQexuGLXiyMOVZGboh96Hn-584_lMO9HUYJoMY);
+        }
+        
+        /* Hero Glass Button */
+        .glass-button {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .glass-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .text-glow {
+            text-shadow: 0 0 40px rgba(59, 130, 246, 0.5);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 font-display selection:bg-primary/30">
+
+    <!-- Navigation (from About Me) -->
+    <header class="sticky top-4 z-50 mx-4 sm:mx-10 rounded-2xl glass-panel mt-4">
+        <div class="layout-container flex justify-center w-full">
+            <div class="w-full max-w-[1200px] flex items-center justify-between px-4 sm:px-8 py-3">
+                <div class="flex items-center gap-3 text-slate-900 dark:text-white">
+                    <div class="size-8 text-primary flex items-center justify-center rounded-lg bg-primary/10">
+                        <span class="material-symbols-outlined">terminal</span>
+                    </div>
+                    <h2 class="text-xl font-bold leading-tight tracking-tight">Alex<span
+                            class="text-primary">.Dev</span></h2>
+                </div>
+                <div class="hidden md:flex flex-1 justify-end gap-8 items-center">
+                    <nav
+                        class="flex items-center gap-8 bg-slate-100/50 dark:bg-slate-800/50 px-6 py-2 rounded-full border border-slate-200/50 dark:border-slate-700/50">
+                        <a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors"
+                            href="#home">Home</a>
+                        <a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors"
+                            href="#about">About Me</a>
+                        <a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors"
+                            href="#skills">Skills</a>
+                        <a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors"
+                            href="#projects">Projects</a>
+                        <a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors"
+                            href="#contact">Contact</a>
+                    </nav>
+                    <button
+                        class="flex cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transition-all text-white text-sm font-bold shadow-lg shadow-blue-500/30 transform hover:-translate-y-0.5">
+                        <span class="truncate">Hire Me</span>
+                    </button>
+                </div>
+                <div class="md:hidden">
+                    <button
+                        class="text-slate-900 dark:text-white p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 flex flex-col w-full">
+
+        <!-- HERO SECTION -->
+        <section id="home"
+            class="dark relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-[#020617] text-white pt-20">
+            <!-- Background Elements (Converted from fixed to absolute) -->
+            <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+                <div
+                    class="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-600/20 rounded-full blur-[120px] opacity-40 mix-blend-screen animate-float">
+                </div>
+                <div
+                    class="absolute top-[30%] right-[-5%] w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[100px] opacity-30 mix-blend-screen animate-float-delayed">
+                </div>
+                <div
+                    class="absolute bottom-[-10%] left-[20%] w-[700px] h-[700px] bg-indigo-600/10 rounded-full blur-[120px] opacity-30">
+                </div>
+                <div class="absolute inset-0 bg-noise opacity-30 mix-blend-overlay"></div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="relative z-10 flex w-full flex-col items-center justify-center px-6 lg:px-20 pb-10">
+                <div class="layout-content-container flex flex-col max-w-[1200px] w-full">
+                    <div class="flex flex-col-reverse lg:flex-row gap-16 items-center">
+                        <div class="flex flex-col gap-8 w-full lg:w-1/2 items-start text-left relative z-10">
+                            <div class="flex flex-col gap-4">
+                                <div
+                                    class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 backdrop-blur-sm w-fit">
+                                    <span class="flex h-2 w-2 relative">
+                                        <span
+                                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                                    </span>
+                                    <span
+                                        class="text-blue-200 text-xs font-semibold uppercase tracking-widest">Available
+                                        for hire</span>
+                                </div>
+                                <h1
+                                    class="text-white text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight">
+                                    Hi, I'm <span
+                                        class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 text-glow">Alex.</span>
+                                </h1>
+                                <h2
+                                    class="text-2xl lg:text-3xl font-light text-gray-300 flex flex-wrap items-center gap-x-2">
+                                    Professional <span class="font-semibold text-white relative">
+                                        Solution Architect
+                                        <span
+                                            class="absolute -bottom-1 left-0 w-full h-1 bg-blue-600/50 rounded-full"></span>
+                                    </span>
+                                </h2>
+                                <p
+                                    class="text-gray-400 text-lg leading-relaxed max-w-[540px] mt-2 border-l-2 border-blue-500/30 pl-6">
+                                    Bridging the gap between complex business challenges and technical excellence. I
+                                    design, present, and deliver end-to-end solutions that drive real-world success.
+                                </p>
+                            </div>
+                            <div class="flex flex-wrap gap-4 mt-2">
+                                <button
+                                    class="relative group overflow-hidden rounded-xl h-14 px-8 bg-blue-600 text-white font-bold tracking-wide transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] hover:-translate-y-1">
+                                    <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600"></div>
+                                    <div
+                                        class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700">
+                                    </div>
+                                    <span class="relative flex items-center gap-2">
+                                        View My Work
+                                        <span
+                                            class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                                    </span>
+                                </button>
+                                <button
+                                    class="glass-button rounded-xl h-14 px-8 text-white font-bold tracking-wide flex items-center gap-2 group">
+                                    Get In Touch
+                                    <span
+                                        class="material-symbols-outlined text-[20px] text-gray-400 group-hover:text-white transition-colors">mail</span>
+                                </button>
+                            </div>
+                            <div class="pt-6 w-full">
+                                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">Connect
+                                    with me</p>
+                                <div class="flex gap-4">
+                                    <a class="group glass-panel rounded-full p-3 hover:bg-white/10 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-all duration-300"
+                                        href="#">
+                                        <img alt="GitHub"
+                                            class="w-5 h-5 invert opacity-70 group-hover:opacity-100 transition-opacity"
+                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAb7vBM5-MuwnSQHOT-EQjsnrDbWmZ-uhWZ3PppORCnutzZfVSco6iszQvQs3RgW9AqODQErOqNJTiWaman4liWd724h4wJjteMUpCVsRRp-beWnNJxDzdmFGLY8dq7KizVMYIuybsShkxCC31EBEDc3IdcaWRvpMfYh_K2Gts__DLQbprBSOzTRtcTgWfl2QwpiOD8LMGYYiMeO0LqDpxnKfpECwDPSutQYwqeoQY_N25M4yKgQl7cdJb5xHkAVEY-3f_vwAfUlprW" />
+                                    </a>
+                                    <a class="group glass-panel rounded-full p-3 hover:bg-white/10 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-all duration-300"
+                                        href="#">
+                                        <img alt="LinkedIn"
+                                            class="w-5 h-5 invert opacity-70 group-hover:opacity-100 transition-opacity"
+                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAq3zIiPxIXRyPnLn67fI-BrWMAXqTaAcLWEamWMAb2z9v5ELCtGjzg5FtX63dlLFb3Q4SumXNCwgRJ3Rouyuw6nBnbpD-3U48kwkoM9rKVy59iA-RqdI-aW_4qG0cejjlFxAIuwOPVsk85n3DG_b9FUD-fgKkzGvUFndcS7w-RWhknOr7LiagdaUe7MZj7156Pr0AeaVYRAtG0iz6bkj2P8DGdYpGnWx1PDvLbWIB5B0_HfWAzqFRc4i1-U61uiqtA_aUFrrLjQXug" />
+                                    </a>
+                                    <a class="group glass-panel rounded-full p-3 hover:bg-white/10 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-all duration-300"
+                                        href="#">
+                                        <img alt="Twitter"
+                                            class="w-5 h-5 invert opacity-70 group-hover:opacity-100 transition-opacity"
+                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5_soqkRgo81v9hZhsOMZR0oMg8nGmh8Oz1eKRoXKFyEsTJ92wk4vaxk0fTSQXQvcE6aoMK58rKp0Fv7zhdruR0BzHcac42locp7tlZwI7avqigmFPbiXx5rcUa4LEZPtWIUutCtF5-9qyAYW7klVffup1mnXJzashWd3Qs-nOPRkQD5NnZwauXG_vtclmTZrNEidOplCzIyEqUhIxUmJqw-RIsOSiY9euFb4bMKkmJJ3QOZmD4grwx4CicIKZkvlNPkVjMXFmNBlg" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-1/2 flex justify-center lg:justify-end relative">
+                            <div
+                                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-radial from-blue-500/20 to-transparent blur-3xl -z-10 animate-pulse">
+                            </div>
+                            <div
+                                class="relative w-full max-w-[500px] aspect-square rounded-[2rem] p-3 glass-panel shadow-2xl transition-transform hover:scale-[1.01] duration-500">
+                                <div
+                                    class="w-full h-full rounded-[1.5rem] overflow-hidden relative border border-white/10">
+                                    <div
+                                        class="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-transparent z-10 opacity-60">
+                                    </div>
+                                    <div class="w-full h-full bg-cover bg-center transition-transform duration-700 hover:scale-105"
+                                        style='background-image: url("media/alex_with_laptop.png");'>
+                                    </div>
+                                </div>
+                                <div
+                                    class="absolute top-8 right-8 z-20 glass-panel p-2 rounded-lg border border-white/5">
+                                    <div class="flex gap-2">
+                                        <div
+                                            class="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)]">
+                                        </div>
+                                        <div
+                                            class="w-2.5 h-2.5 rounded-full bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.6)]">
+                                        </div>
+                                        <div
+                                            class="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="absolute bottom-8 left-8 right-8 z-20">
+                                    <div
+                                        class="glass-panel rounded-2xl p-4 flex items-center gap-4 bg-gray-900/40 backdrop-blur-xl border border-white/10 shadow-lg">
+                                        <div
+                                            class="bg-gradient-to-br from-blue-500 to-indigo-600 p-3 rounded-xl text-white shadow-lg shadow-blue-500/20">
+                                            <span class="material-symbols-outlined">workspace_premium</span>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-white font-bold text-base tracking-wide">10+ Years Experience
+                                            </p>
+                                            <p class="text-gray-400 text-xs mt-0.5">Software Development</p>
+                                        </div>
+                                        <div class="text-green-400 bg-green-400/10 p-1 rounded-full">
+                                            <span class="material-symbols-outlined text-sm">check</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="absolute -right-6 top-20 glass-panel w-14 h-14 flex items-center justify-center rounded-2xl z-30 hidden lg:flex animate-float-delayed border border-white/10">
+                                <span class="material-symbols-outlined text-blue-400 text-2xl">code</span>
+                            </div>
+                            <div
+                                class="absolute -left-6 bottom-32 glass-panel w-14 h-14 flex items-center justify-center rounded-2xl z-30 hidden lg:flex animate-float border border-white/10">
+                                <span class="material-symbols-outlined text-purple-400 text-2xl">terminal</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about"
+            class="relative w-full flex flex-col items-center py-20 bg-background-light dark:bg-background-dark">
+            <div class="layout-content-container flex flex-col max-w-[1080px] w-full px-4 sm:px-10 gap-16">
+                <!-- About Intro -->
+                <section class="@container">
+                    <div class="flex flex-col gap-10 @[480px]:gap-12 @[864px]:flex-row items-center">
+                        <div class="w-full @[864px]:w-5/12 flex justify-center relative group">
+                            <div
+                                class="absolute -inset-4 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-[2rem] opacity-30 blur-lg group-hover:opacity-50 transition-opacity duration-500">
+                            </div>
+                            <div class="w-full aspect-[4/5] bg-center bg-no-repeat bg-cover rounded-2xl shadow-2xl relative overflow-hidden z-10 border border-white/10"
+                                style='background-image: url("media/alex_ok.png");'>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent opacity-60">
+                                </div>
+                                <div
+                                    class="absolute bottom-4 left-4 right-4 glass-panel rounded-xl p-3 flex justify-between items-center">
+                                    <div class="text-xs font-mono text-slate-600 dark:text-slate-300">
+                                        &lt;Developer /&gt;
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                                        <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+                                        <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-8 w-full @[864px]:w-7/12 @[864px]:pl-10 relative">
+                            <div
+                                class="absolute top-0 right-0 -z-10 text-[200px] leading-none font-black text-slate-200/5 dark:text-slate-800/20 select-none overflow-visible">
+                                01</div>
+                            <div class="flex flex-col gap-6 text-left">
+                                <div
+                                    class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100/80 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700/50 w-fit backdrop-blur-sm">
+                                    <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                                    <span
+                                        class="text-blue-700 dark:text-blue-300 text-xs font-bold uppercase tracking-wider">Who
+                                        I Am</span>
+                                </div>
+                                <h1 class="text-5xl font-black leading-tight tracking-tight @[480px]:text-6xl">
+                                    About <span class="text-gradient">Me</span>
+                                </h1>
+                                <div class="space-y-4">
+                                    <p class="text-slate-600 dark:text-slate-300 text-lg font-light leading-relaxed">
+                                        I am a <strong class="font-semibold text-slate-900 dark:text-white">Solution
+                                            Architect</strong> with over 12 years of experience delivering high-impact
+                                        systems across the **Banking, Manufacturing, and Telecommunications** sectors.
+                                        My value goes beyond software development; I specialize in the complete product
+                                        lifecycle.
+                                    </p>
+                                    <p
+                                        class="text-slate-600 dark:text-slate-300 text-lg font-light leading-relaxed font-bold">
+                                        I don't just write code—I design solutions, solve complex business problems, and
+                                        take full ownership in presenting and delivering final products to customers.
+                                    </p>
+                                    <p class="text-slate-600 dark:text-slate-300 text-lg font-light leading-relaxed">
+                                        From crafting detailed business flows and database architectures to integrating
+                                        cutting-edge AI agents and IoT systems, I ensure every technical decision serves
+                                        a strategic business goal.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap gap-4 pt-4">
+                                <button
+                                    class="group flex cursor-pointer items-center justify-center rounded-xl h-12 px-8 bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 transition-all text-white dark:text-slate-900 text-base font-bold shadow-lg shadow-slate-900/20 dark:shadow-white/10 hover:shadow-xl hover:-translate-y-1">
+                                    <span class="mr-2">Contact Me</span>
+                                    <span
+                                        class="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1">arrow_forward</span>
+                                </button>
+                                <a href="media/Alex Setiawan.pdf" download="Alex Setiawan.pdf"
+                                    class="group flex cursor-pointer items-center justify-center rounded-xl h-12 px-8 glass-card text-slate-900 dark:text-white text-base font-bold hover:bg-white/60 dark:hover:bg-slate-700/60">
+                                    <span class="mr-2">Download CV</span>
+                                    <span
+                                        class="material-symbols-outlined text-sm group-hover:animate-bounce">download</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Key Attributes -->
+                <section>
+                    <div class="flex flex-col gap-10">
+                        <div class="flex flex-col gap-3 text-center sm:text-left relative">
+                            <div
+                                class="absolute -left-4 top-1 w-1 h-10 bg-gradient-to-b from-blue-500 to-indigo-500 rounded-full hidden sm:block">
+                            </div>
+                            <h2 class="text-3xl font-bold leading-tight tracking-tight">
+                                Key Attributes
+                            </h2>
+                            <p class="text-slate-500 dark:text-slate-400 text-base max-w-[600px]">
+                                Qualities that define my professional approach to software development.
+                            </p>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <!-- Attribute 1 -->
+                            <div class="glass-card rounded-2xl p-6 group relative overflow-hidden">
+                                <div
+                                    class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                    <span
+                                        class="material-symbols-outlined text-8xl text-primary transform rotate-12">lightbulb</span>
+                                </div>
+                                <div class="relative z-10 flex flex-col gap-4 h-full">
+                                    <div
+                                        class="size-14 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center shadow-lg shadow-blue-500/30 group-hover:scale-110 transition-transform duration-300">
+                                        <span class="material-symbols-outlined text-[32px]">lightbulb</span>
+                                    </div>
+                                    <div class="flex flex-col gap-2 mt-auto">
+                                        <h3 class="text-slate-900 dark:text-white text-lg font-bold">Problem Solver</h3>
+                                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">Turning
+                                            complex issues into simple, elegant solutions through logic.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Attribute 2 -->
+                            <div class="glass-card rounded-2xl p-6 group relative overflow-hidden">
+                                <div
+                                    class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                    <span
+                                        class="material-symbols-outlined text-8xl text-primary transform rotate-12">group</span>
+                                </div>
+                                <div class="relative z-10 flex flex-col gap-4 h-full">
+                                    <div
+                                        class="size-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex items-center justify-center shadow-lg shadow-indigo-500/30 group-hover:scale-110 transition-transform duration-300">
+                                        <span class="material-symbols-outlined text-[32px]">group</span>
+                                    </div>
+                                    <div class="flex flex-col gap-2 mt-auto">
+                                        <h3 class="text-slate-900 dark:text-white text-lg font-bold">Team Player</h3>
+                                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                                            Collaborating effectively to achieve common goals with empathy.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Attribute 3 -->
+                            <div class="glass-card rounded-2xl p-6 group relative overflow-hidden">
+                                <div
+                                    class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                    <span
+                                        class="material-symbols-outlined text-8xl text-primary transform rotate-12">rocket_launch</span>
+                                </div>
+                                <div class="relative z-10 flex flex-col gap-4 h-full">
+                                    <div
+                                        class="size-14 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 text-white flex items-center justify-center shadow-lg shadow-purple-500/30 group-hover:scale-110 transition-transform duration-300">
+                                        <span class="material-symbols-outlined text-[32px]">rocket_launch</span>
+                                    </div>
+                                    <div class="flex flex-col gap-2 mt-auto">
+                                        <h3 class="text-slate-900 dark:text-white text-lg font-bold">Fast Learner</h3>
+                                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">Quickly
+                                            adapting to new technologies, frameworks and stacks.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Attribute 4 -->
+                            <div class="glass-card rounded-2xl p-6 group relative overflow-hidden">
+                                <div
+                                    class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                    <span
+                                        class="material-symbols-outlined text-8xl text-primary transform rotate-12">search</span>
+                                </div>
+                                <div class="relative z-10 flex flex-col gap-4 h-full">
+                                    <div
+                                        class="size-14 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-600 text-white flex items-center justify-center shadow-lg shadow-pink-500/30 group-hover:scale-110 transition-transform duration-300">
+                                        <span class="material-symbols-outlined text-[32px]">search</span>
+                                    </div>
+                                    <div class="flex flex-col gap-2 mt-auto">
+                                        <h3 class="text-slate-900 dark:text-white text-lg font-bold">Detail Oriented
+                                        </h3>
+                                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                                            Pixel-perfect implementation and robust code is my standard.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Personal Info -->
+                <section class="mb-12">
+                    <div class="glass-panel rounded-3xl p-2 md:p-3">
+                        <div
+                            class="flex flex-col lg:flex-row gap-6 bg-white/50 dark:bg-slate-900/50 rounded-2xl p-6 lg:p-8 backdrop-blur-sm">
+                            <div class="flex-1 flex flex-col">
+                                <div
+                                    class="pb-6 border-b border-slate-200/60 dark:border-slate-700/60 mb-6 flex justify-between items-center">
+                                    <h3
+                                        class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-400">
+                                        Personal Info</h3>
+                                    <span class="material-symbols-outlined text-slate-400">id_card</span>
+                                </div>
+                                <div class="grid gap-y-6">
+                                    <div
+                                        class="group flex items-center p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors">
+                                        <div
+                                            class="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 flex items-center justify-center mr-4">
+                                            <span class="material-symbols-outlined text-[20px]">person</span>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span
+                                                class="text-xs font-semibold uppercase text-slate-400 tracking-wider">Name</span>
+                                            <span class="text-slate-900 dark:text-white text-base font-semibold">Alex
+                                                Doe</span>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="group flex items-center p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors">
+                                        <div
+                                            class="w-10 h-10 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 flex items-center justify-center mr-4">
+                                            <span class="material-symbols-outlined text-[20px]">mail</span>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span
+                                                class="text-xs font-semibold uppercase text-slate-400 tracking-wider">Email</span>
+                                            <span
+                                                class="text-slate-900 dark:text-white text-base font-semibold">setiawanalex99@gmail.com</span>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="group flex items-center p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors">
+                                        <div
+                                            class="w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-900/30 text-purple-600 flex items-center justify-center mr-4">
+                                            <span class="material-symbols-outlined text-[20px]">location_on</span>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span
+                                                class="text-xs font-semibold uppercase text-slate-400 tracking-wider">Location</span>
+                                            <span class="text-slate-900 dark:text-white text-base font-semibold">San
+                                                Francisco, CA</span>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="group flex items-center p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors">
+                                        <div
+                                            class="w-10 h-10 rounded-lg bg-pink-100 dark:bg-pink-900/30 text-pink-600 flex items-center justify-center mr-4">
+                                            <span class="material-symbols-outlined text-[20px]">work_history</span>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span
+                                                class="text-xs font-semibold uppercase text-slate-400 tracking-wider">Experience</span>
+                                            <span class="text-slate-900 dark:text-white text-base font-semibold">10+
+                                                Years</span>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="group flex items-center p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors">
+                                        <div
+                                            class="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/30 text-green-600 flex items-center justify-center mr-4">
+                                            <span class="material-symbols-outlined text-[20px]">work</span>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span
+                                                class="text-xs font-semibold uppercase text-slate-400 tracking-wider">Freelance</span>
+                                            <div class="flex items-center gap-2">
+                                                <span class="relative flex h-2.5 w-2.5">
+                                                    <span
+                                                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                                    <span
+                                                        class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                                                </span>
+                                                <span
+                                                    class="text-green-600 dark:text-green-400 text-base font-bold">Available</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="flex-1 rounded-2xl overflow-hidden border border-slate-200/50 dark:border-slate-700/50 bg-slate-100 dark:bg-slate-800/50 min-h-[350px] relative group shadow-inner">
+                                <div class="w-full h-full bg-cover bg-center grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700"
+                                    data-alt="Map view of San Francisco city streets" data-location="San Francisco"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAFtA8nfKvaEhVtg_LXDKbW6Tlk7ccAM7cp7_8khfg8aDaQ_Si_wdAGeARzvP-y7sKeiOvcjQwQU1giqyLKCZgjyW4X8ziGXt9GiuXhznH-csTnMCxg2WcoIBJ0_mDdkWlqmeb6nwgHMStV9UjW7nJ8AwyBsaF6KeDQ5PBUQjx8c0xqrGt5h4dWGrhm4YUHJTwslCH8whYsyAmdZtPv0LkPb4hLbt7w8aghleZeW5QyYb41-ne9Qj67Qg7D1ziIhIrB3V3szOAQHhd_");'>
+                                </div>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent opacity-80 pointer-events-none">
+                                </div>
+                                <div class="absolute bottom-6 left-6 right-6 flex flex-col gap-2">
+                                    <div
+                                        class="glass-panel px-4 py-3 rounded-xl flex items-center justify-between shadow-2xl">
+                                        <div class="flex items-center gap-3 text-slate-900 dark:text-white">
+                                            <div class="bg-red-500/10 p-2 rounded-full text-red-500">
+                                                <span class="material-symbols-outlined text-lg">pin_drop</span>
+                                            </div>
+                                            <div>
+                                                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                                                    Current Location</p>
+                                                <p class="text-sm font-bold">San Francisco, CA</p>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="bg-green-500/20 text-green-600 dark:text-green-400 text-[10px] font-bold px-2 py-1 rounded-md border border-green-500/30 uppercase">
+                                            Tech Hub
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <section id="skills" class="relative w-full py-20 tech-grid-bg bg-background-light dark:bg-background-dark">
+            <div class="mx-auto flex flex-col max-w-[1024px] gap-12 px-6">
+                <div class="flex flex-col gap-4 text-center md:text-left relative">
+                    <div
+                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-mono w-fit mx-auto md:mx-0">
+                        <span class="relative flex h-2 w-2">
+                            <span
+                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                        </span>
+                        SYSTEM_STATUS: ONLINE
+                    </div>
+                    <h1
+                        class="text-5xl md:text-6xl font-black leading-tight tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-blue-800 to-slate-900 dark:from-white dark:via-blue-200 dark:to-white drop-shadow-sm">
+                        Tech Stack & Skills
+                    </h1>
+                    <p
+                        class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed max-w-2xl mx-auto md:mx-0 font-light">
+                        Architecting digital solutions with a precise, modern toolkit. My expertise spans reactive
+                        frontends to scalable backend infrastructures.
+                    </p>
+                </div>
+                <!-- Filter Buttons (Optional functionality, acceptable as static for now or can implement logic later) -->
+                <div class="flex justify-center md:justify-start">
+                    <div class="glass-card p-1.5 rounded-full flex gap-1 overflow-x-auto max-w-full">
+                        <button
+                            class="px-6 py-2 rounded-full bg-blue-600 text-white text-sm font-bold shadow-md shadow-blue-600/20">All</button>
+                        <button
+                            class="px-6 py-2 rounded-full text-slate-600 dark:text-slate-300 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">Frontend</button>
+                        <button
+                            class="px-6 py-2 rounded-full text-slate-600 dark:text-slate-300 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">Backend</button>
+                        <button
+                            class="px-6 py-2 rounded-full text-slate-600 dark:text-slate-300 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">DevOps</button>
+                    </div>
+                </div>
+
+                <!-- Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- HTML5 -->
+                    <div
+                        class="group glass-card relative p-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-orange-500/10 hover:border-orange-500/30 overflow-hidden">
+                        <div
+                            class="absolute -right-10 -top-10 w-32 h-32 bg-orange-500/10 rounded-full blur-2xl group-hover:bg-orange-500/20 transition-all">
+                        </div>
+                        <div class="relative z-10 flex flex-col h-full gap-5">
+                            <div class="flex justify-between items-start">
+                                <div
+                                    class="p-3 rounded-2xl bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-900/10 text-orange-600 dark:text-orange-400 border border-orange-200/50 dark:border-orange-700/30 shadow-inner">
+                                    <span class="material-symbols-outlined text-3xl">html</span>
+                                </div>
+                                <span
+                                    class="text-[10px] font-mono uppercase tracking-wider text-slate-400 bg-slate-100 dark:bg-slate-800/50 px-2 py-1 rounded-md border border-slate-200 dark:border-slate-700">Struct</span>
+                            </div>
+                            <div>
+                                <h3
+                                    class="text-xl font-bold text-slate-800 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
+                                    HTML5</h3>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Semantic Architecture &
+                                    Accessibility</p>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="flex justify-between text-xs mb-2 font-mono text-slate-500">
+                                    <span>Proficiency</span>
+                                    <span>98%</span>
+                                </div>
+                                <div
+                                    class="h-1.5 w-full bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden">
+                                    <div
+                                        class="h-full bg-gradient-to-r from-orange-400 to-orange-600 w-[98%] rounded-full shadow-[0_0_10px_rgba(234,88,12,0.5)]">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- CSS3 -->
+                    <div
+                        class="group glass-card relative p-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/10 hover:border-blue-500/30 overflow-hidden">
+                        <div
+                            class="absolute -right-10 -top-10 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl group-hover:bg-blue-500/20 transition-all">
+                        </div>
+                        <div class="relative z-10 flex flex-col h-full gap-5">
+                            <div class="flex justify-between items-start">
+                                <div
+                                    class="p-3 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-900/10 text-blue-600 dark:text-blue-400 border border-blue-200/50 dark:border-blue-700/30 shadow-inner">
+                                    <span class="material-symbols-outlined text-3xl">css</span>
+                                </div>
+                                <span
+                                    class="text-[10px] font-mono uppercase tracking-wider text-slate-400 bg-slate-100 dark:bg-slate-800/50 px-2 py-1 rounded-md border border-slate-200 dark:border-slate-700">Style</span>
+                            </div>
+                            <div>
+                                <h3
+                                    class="text-xl font-bold text-slate-800 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                    CSS3</h3>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Tailwind, SCSS, Animations
+                                </p>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="flex justify-between text-xs mb-2 font-mono text-slate-500">
+                                    <span>Proficiency</span>
+                                    <span>95%</span>
+                                </div>
+                                <div
+                                    class="h-1.5 w-full bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden">
+                                    <div
+                                        class="h-full bg-gradient-to-r from-blue-400 to-blue-600 w-[95%] rounded-full shadow-[0_0_10px_rgba(37,99,235,0.5)]">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- C# -->
+                    <div
+                        class="group glass-card relative p-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-violet-500/10 hover:border-violet-500/30 overflow-hidden">
+                        <div
+                            class="absolute -right-10 -top-10 w-32 h-32 bg-violet-500/10 rounded-full blur-2xl group-hover:bg-violet-500/20 transition-all">
+                        </div>
+                        <div class="relative z-10 flex flex-col h-full gap-5">
+                            <div class="flex justify-between items-start">
+                                <div
+                                    class="p-3 rounded-2xl bg-gradient-to-br from-violet-50 to-violet-100 dark:from-violet-900/20 dark:to-violet-900/10 text-violet-600 dark:text-violet-400 border border-violet-200/50 dark:border-violet-700/30 shadow-inner">
+                                    <span class="material-symbols-outlined text-3xl">code</span>
+                                </div>
+                                <span
+                                    class="text-[10px] font-mono uppercase tracking-wider text-slate-400 bg-slate-100 dark:bg-slate-800/50 px-2 py-1 rounded-md border border-slate-200 dark:border-slate-700">Core</span>
+                            </div>
+                            <div>
+                                <h3
+                                    class="text-xl font-bold text-slate-800 dark:text-white group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
+                                    C#</h3>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">.NET Core, Enterprise Systems
+                                </p>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="flex justify-between text-xs mb-2 font-mono text-slate-500">
+                                    <span>Proficiency</span>
+                                    <span>90%</span>
+                                </div>
+                                <div
+                                    class="h-1.5 w-full bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden">
+                                    <div
+                                        class="h-full bg-gradient-to-r from-violet-400 to-violet-600 w-[90%] rounded-full shadow-[0_0_10px_rgba(124,58,237,0.5)]">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- JavaScript -->
+                    <div
+                        class="group glass-card relative p-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-yellow-500/10 hover:border-yellow-500/30 overflow-hidden">
+                        <div
+                            class="absolute -right-10 -top-10 w-32 h-32 bg-yellow-500/10 rounded-full blur-2xl group-hover:bg-yellow-500/20 transition-all">
+                        </div>
+                        <div class="relative z-10 flex flex-col h-full gap-5">
+                            <div class="flex justify-between items-start">
+                                <div
+                                    class="p-3 rounded-2xl bg-gradient-to-br from-yellow-50 to-yellow-100 dark:from-yellow-900/20 dark:to-yellow-900/10 text-yellow-600 dark:text-yellow-400 border border-yellow-200/50 dark:border-yellow-700/30 shadow-inner">
+                                    <span class="material-symbols-outlined text-3xl">javascript</span>
+                                </div>
+                                <span
+                                    class="text-[10px] font-mono uppercase tracking-wider text-slate-400 bg-slate-100 dark:bg-slate-800/50 px-2 py-1 rounded-md border border-slate-200 dark:border-slate-700">Logic</span>
+                            </div>
+                            <div>
+                                <h3
+                                    class="text-xl font-bold text-slate-800 dark:text-white group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors">
+                                    JavaScript</h3>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">ES6+, Async Patterns, DOM</p>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="flex justify-between text-xs mb-2 font-mono text-slate-500">
+                                    <span>Proficiency</span>
+                                    <span>95%</span>
+                                </div>
+                                <div
+                                    class="h-1.5 w-full bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden">
+                                    <div
+                                        class="h-full bg-gradient-to-r from-yellow-400 to-yellow-500 w-[95%] rounded-full shadow-[0_0_10px_rgba(234,179,8,0.5)]">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MERN Stack -->
+                <div class="glass-card p-8 rounded-3xl relative overflow-hidden group">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-violet-600/10 dark:from-blue-900/20 dark:to-violet-900/20">
+                    </div>
+                    <div
+                        class="absolute top-0 right-0 p-32 bg-blue-500/5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2">
+                    </div>
+                    <div class="relative z-10 flex flex-col md:flex-row gap-8 items-center">
+                        <div class="flex-1 space-y-4 text-center md:text-left">
+                            <div
+                                class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-white/10 border border-slate-200 dark:border-white/10 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-300">
+                                <span class="material-symbols-outlined text-sm">verified</span>
+                                Recommended Stack
+                            </div>
+                            <h2 class="text-3xl font-bold text-slate-900 dark:text-white">MERN Architecture</h2>
+                            <p class="text-slate-600 dark:text-slate-300 text-lg">
+                                For rapid prototyping and scalable full-stack applications, I leverage the MongoDB,
+                                Express, React, Node.js ecosystem.
+                            </p>
+                            <div class="flex flex-wrap gap-2 justify-center md:justify-start pt-2">
+                                <span
+                                    class="px-3 py-1 bg-white/50 dark:bg-black/30 backdrop-blur rounded-lg border border-slate-200 dark:border-white/10 text-xs font-mono font-medium text-slate-600 dark:text-slate-300">MongoDB</span>
+                                <span
+                                    class="px-3 py-1 bg-white/50 dark:bg-black/30 backdrop-blur rounded-lg border border-slate-200 dark:border-white/10 text-xs font-mono font-medium text-slate-600 dark:text-slate-300">Express</span>
+                                <span
+                                    class="px-3 py-1 bg-white/50 dark:bg-black/30 backdrop-blur rounded-lg border border-slate-200 dark:border-white/10 text-xs font-mono font-medium text-slate-600 dark:text-slate-300">React</span>
+                                <span
+                                    class="px-3 py-1 bg-white/50 dark:bg-black/30 backdrop-blur rounded-lg border border-slate-200 dark:border-white/10 text-xs font-mono font-medium text-slate-600 dark:text-slate-300">Node</span>
+                            </div>
+                        </div>
+                        <div
+                            class="flex-1 w-full relative h-64 rounded-2xl overflow-hidden border border-white/20 shadow-2xl">
+                            <div class="absolute inset-0 bg-slate-900 flex items-center justify-center">
+                                <div class="flex flex-col gap-2 w-3/4 opacity-50">
+                                    <div class="h-2 bg-slate-700 rounded w-1/2"></div>
+                                    <div class="h-2 bg-slate-700 rounded w-3/4"></div>
+                                    <div class="h-2 bg-blue-500 rounded w-full shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+                                    </div>
+                                    <div class="h-2 bg-slate-700 rounded w-2/3"></div>
+                                </div>
+                                <span
+                                    class="absolute material-symbols-outlined text-8xl text-white/10">deployed_code</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-center mt-8 pb-12">
+                    <button
+                        class="group relative px-8 py-3 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold overflow-hidden transition-all hover:scale-105 shadow-xl shadow-slate-900/20 dark:shadow-white/10">
+                        <div
+                            class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000">
+                        </div>
+                        <span class="relative flex items-center gap-2">
+                            Explore Projects
+                            <span
+                                class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="dark relative w-full py-20 bg-[#0f1115] text-gray-300 overflow-hidden">
+            <div class="absolute inset-0 pointer-events-none z-0">
+                <div class="absolute inset-0 bg-grid-pattern opacity-100"></div>
+                <div
+                    class="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[128px] mix-blend-screen opacity-40">
+                </div>
+                <div
+                    class="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-[128px] mix-blend-screen opacity-40">
+                </div>
+            </div>
+            <div class="relative z-10 flex w-full max-w-[1200px] flex-col gap-10 mx-auto px-6">
+                <div class="flex flex-col gap-4 pt-4 md:flex-row md:items-end md:justify-between">
+                    <div class="flex max-w-2xl flex-col gap-2">
+                        <h1
+                            class="font-display text-5xl md:text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-400 drop-shadow-sm">
+                            Selected Works
+                        </h1>
+                        <p class="text-lg text-gray-400 font-light max-w-xl border-l-2 border-primary/50 pl-4 mt-2">
+                            Building digital products with a focus on functionality, performance, and cutting-edge user
+                            experience.
+                        </p>
+                    </div>
+                    <div class="hidden md:flex gap-6 text-right">
+                        <div class="flex flex-col">
+                            <span class="text-2xl font-display font-bold text-white">12+</span>
+                            <span class="text-xs uppercase tracking-widest text-gray-500">Projects</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-2xl font-display font-bold text-white">4</span>
+                            <span class="text-xs uppercase tracking-widest text-gray-500">Years</span>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="glass-panel rounded-2xl p-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between sticky top-24 z-40 bg-[#0f1115]/80 backdrop-blur-md border border-white/5">
+                    <div class="relative flex-1 max-w-md group">
+                        <div
+                            class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 group-focus-within:text-primary transition-colors">
+                            <span class="material-symbols-outlined text-[20px]">search</span>
+                        </div>
+                        <input
+                            class="w-full rounded-lg border border-white/10 bg-black/20 py-2.5 pl-10 pr-4 text-sm text-gray-200 placeholder-gray-500 focus:border-primary/50 focus:bg-black/40 focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all"
+                            placeholder="Search projects..." type="text" />
+                    </div>
+                    <div class="flex gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
+                        <button
+                            class="whitespace-nowrap rounded-full bg-primary/20 px-4 py-1.5 text-xs font-semibold text-primary border border-primary/30 transition-all hover:bg-primary hover:text-white shadow-[0_0_10px_rgba(59,130,246,0.3)]">
+                            All Works
+                        </button>
+                        <button
+                            class="whitespace-nowrap rounded-full bg-white/5 px-4 py-1.5 text-xs font-medium text-gray-400 border border-white/5 transition-all hover:bg-white/10 hover:text-white hover:border-white/20">
+                            Web Dev
+                        </button>
+                        <button
+                            class="whitespace-nowrap rounded-full bg-white/5 px-4 py-1.5 text-xs font-medium text-gray-400 border border-white/5 transition-all hover:bg-white/10 hover:text-white hover:border-white/20">
+                            Mobile
+                        </button>
+                        <button
+                            class="whitespace-nowrap rounded-full bg-white/5 px-4 py-1.5 text-xs font-medium text-gray-400 border border-white/5 transition-all hover:bg-white/10 hover:text-white hover:border-white/20">
+                            Backend
+                        </button>
+                        <button
+                            class="whitespace-nowrap rounded-full bg-white/5 px-4 py-1.5 text-xs font-medium text-gray-400 border border-white/5 transition-all hover:bg-white/10 hover:text-white hover:border-white/20">
+                            UI/UX
+                        </button>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+
+                    <!-- HR Payroll -->
+                    <div
+                        class="group relative flex flex-col overflow-hidden rounded-2xl glass-panel transition-all duration-500 hover:border-primary/30 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:-translate-y-1">
+                        <a href="project-hr-payroll.html" class="block">
+                            <div class="relative h-48 w-full overflow-hidden">
+                                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                    style='background-image: url("screenshots/hr_payroll/Login.png");'></div>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-[#0f1115] via-transparent to-transparent opacity-90">
+                                </div>
+                                <div
+                                    class="absolute top-3 right-3 rounded-full bg-black/60 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-md border border-white/10">
+                                    v1.2</div>
+                            </div>
+                        </a>
+                        <div class="flex flex-1 flex-col p-6 pt-2">
+                            <div class="mb-4">
+                                <h3
+                                    class="font-display text-xl font-bold text-white group-hover:text-primary transition-colors">
+                                    <a href="project-hr-payroll.html">HR Payroll Management</a>
+                                </h3>
+                                <p class="mt-2 line-clamp-2 text-sm text-gray-400 font-light leading-relaxed">Automated
+                                    payroll processing and employee data management system.</p>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="mb-4 flex flex-wrap gap-2">
+                                    <span
+                                        class="rounded bg-blue-500/10 border border-blue-500/20 px-2 py-1 text-[10px] font-medium text-blue-400">PHP</span>
+                                    <span
+                                        class="rounded bg-orange-500/10 border border-orange-500/20 px-2 py-1 text-[10px] font-medium text-orange-400">MySQL</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-3 border-t border-white/5 pt-4">
+                                    <a class="flex items-center justify-center gap-2 rounded-lg bg-white/5 py-2 text-xs font-semibold text-white transition-all hover:bg-primary hover:shadow-neon"
+                                        href="project-hr-payroll.html">
+                                        <span class="material-symbols-outlined text-sm">visibility</span> Demo
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Digital Display -->
+                    <div
+                        class="group relative flex flex-col overflow-hidden rounded-2xl glass-panel transition-all duration-500 hover:border-primary/30 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:-translate-y-1">
+                        <a href="project-digital-display.html" class="block">
+                            <div class="relative h-48 w-full overflow-hidden">
+                                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                    style='background-image: url("screenshots/digital_display/Home.png");'></div>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-[#0f1115] via-transparent to-transparent opacity-90">
+                                </div>
+                                <div
+                                    class="absolute top-3 right-3 rounded-full bg-black/60 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-md border border-white/10">
+                                    IoT</div>
+                            </div>
+                        </a>
+                        <div class="flex flex-1 flex-col p-6 pt-2">
+                            <div class="mb-4">
+                                <h3
+                                    class="font-display text-xl font-bold text-white group-hover:text-primary transition-colors">
+                                    <a href="project-digital-display.html">Digital Display System</a>
+                                </h3>
+                                <p class="mt-2 line-clamp-2 text-sm text-gray-400 font-light leading-relaxed">
+                                    Centralized control system for campus-wide digital signage and announcements.</p>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="mb-4 flex flex-wrap gap-2">
+                                    <span
+                                        class="rounded bg-purple-500/10 border border-purple-500/20 px-2 py-1 text-[10px] font-medium text-purple-400">C#</span>
+                                    <span
+                                        class="rounded bg-blue-500/10 border border-blue-500/20 px-2 py-1 text-[10px] font-medium text-blue-400">.NET</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-3 border-t border-white/5 pt-4">
+                                    <a class="flex items-center justify-center gap-2 rounded-lg bg-white/5 py-2 text-xs font-semibold text-white transition-all hover:bg-primary hover:shadow-neon"
+                                        href="project-digital-display.html">
+                                        <span class="material-symbols-outlined text-sm">visibility</span> Demo
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- School Management -->
+                    <div
+                        class="group relative flex flex-col overflow-hidden rounded-2xl glass-panel transition-all duration-500 hover:border-primary/30 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:-translate-y-1">
+                        <a href="project-school-management.html" class="block">
+                            <div class="relative h-48 w-full overflow-hidden">
+                                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                    style='background-image: url("screenshots/school_management_system/Form Login.png");'>
+                                </div>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-[#0f1115] via-transparent to-transparent opacity-90">
+                                </div>
+                                <div
+                                    class="absolute top-3 right-3 rounded-full bg-black/60 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-md border border-white/10">
+                                    v2.0</div>
+                            </div>
+                        </a>
+                        <div class="flex flex-1 flex-col p-6 pt-2">
+                            <div class="mb-4">
+                                <h3
+                                    class="font-display text-xl font-bold text-white group-hover:text-primary transition-colors">
+                                    <a href="project-school-management.html">School Management</a>
+                                </h3>
+                                <p class="mt-2 line-clamp-2 text-sm text-gray-400 font-light leading-relaxed">
+                                    Comprehensive dashboard for managing student records, grading, and fees.</p>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="mb-4 flex flex-wrap gap-2">
+                                    <span
+                                        class="rounded bg-blue-500/10 border border-blue-500/20 px-2 py-1 text-[10px] font-medium text-blue-400">ASP.NET</span>
+                                    <span
+                                        class="rounded bg-orange-500/10 border border-orange-500/20 px-2 py-1 text-[10px] font-medium text-orange-400">MSSQL</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-3 border-t border-white/5 pt-4">
+                                    <a class="flex items-center justify-center gap-2 rounded-lg bg-white/5 py-2 text-xs font-semibold text-white transition-all hover:bg-primary hover:shadow-neon"
+                                        href="project-school-management.html">
+                                        <span class="material-symbols-outlined text-sm">visibility</span> Demo
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- School Academic -->
+                    <div
+                        class="group relative flex flex-col overflow-hidden rounded-2xl glass-panel transition-all duration-500 hover:border-primary/30 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:-translate-y-1">
+                        <a href="project-school-academic.html" class="block">
+                            <div class="relative h-48 w-full overflow-hidden">
+                                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                    style='background-image: url("screenshots/system_information_academic/FormLogin.png");'>
+                                </div>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-[#0f1115] via-transparent to-transparent opacity-90">
+                                </div>
+                                <div
+                                    class="absolute top-3 right-3 rounded-full bg-black/60 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-md border border-white/10">
+                                    Edu</div>
+                            </div>
+                        </a>
+                        <div class="flex flex-1 flex-col p-6 pt-2">
+                            <div class="mb-4">
+                                <h3
+                                    class="font-display text-xl font-bold text-white group-hover:text-primary transition-colors">
+                                    <a href="project-school-academic.html">School Academic System</a>
+                                </h3>
+                                <p class="mt-2 line-clamp-2 text-sm text-gray-400 font-light leading-relaxed">Platform
+                                    connecting admins, teachers, and students for academic updates.</p>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="mb-4 flex flex-wrap gap-2">
+                                    <span
+                                        class="rounded bg-blue-500/10 border border-blue-500/20 px-2 py-1 text-[10px] font-medium text-blue-400">ASP.NET</span>
+                                    <span
+                                        class="rounded bg-orange-500/10 border border-orange-500/20 px-2 py-1 text-[10px] font-medium text-orange-400">MSSQL</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-3 border-t border-white/5 pt-4">
+                                    <a class="flex items-center justify-center gap-2 rounded-lg bg-white/5 py-2 text-xs font-semibold text-white transition-all hover:bg-primary hover:shadow-neon"
+                                        href="project-school-academic.html">
+                                        <span class="material-symbols-outlined text-sm">visibility</span> Demo
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Real Estate -->
+                    <div
+                        class="group relative flex flex-col overflow-hidden rounded-2xl glass-panel transition-all duration-500 hover:border-primary/30 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:-translate-y-1">
+                        <a href="project-real-estate-sales.html" class="block">
+                            <div class="relative h-48 w-full overflow-hidden">
+                                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                    style='background-image: url("screenshots/real_estate_sales_system/Input Pembayaran.png");'>
+                                </div>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-[#0f1115] via-transparent to-transparent opacity-90">
+                                </div>
+                                <div
+                                    class="absolute top-3 right-3 rounded-full bg-black/60 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-md border border-white/10">
+                                    Sales</div>
+                            </div>
+                        </a>
+                        <div class="flex flex-1 flex-col p-6 pt-2">
+                            <div class="mb-4">
+                                <h3
+                                    class="font-display text-xl font-bold text-white group-hover:text-primary transition-colors">
+                                    <a href="project-real-estate-sales.html">Real Estate Sales</a>
+                                </h3>
+                                <p class="mt-2 line-clamp-2 text-sm text-gray-400 font-light leading-relaxed">Sales
+                                    lifecycle management for property listings and payments.</p>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="mb-4 flex flex-wrap gap-2">
+                                    <span
+                                        class="rounded bg-purple-500/10 border border-purple-500/20 px-2 py-1 text-[10px] font-medium text-purple-400">VB.NET</span>
+                                    <span
+                                        class="rounded bg-orange-500/10 border border-orange-500/20 px-2 py-1 text-[10px] font-medium text-orange-400">MSSQL</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-3 border-t border-white/5 pt-4">
+                                    <a class="flex items-center justify-center gap-2 rounded-lg bg-white/5 py-2 text-xs font-semibold text-white transition-all hover:bg-primary hover:shadow-neon"
+                                        href="project-real-estate-sales.html">
+                                        <span class="material-symbols-outlined text-sm">visibility</span> Demo
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Inventory Management -->
+                    <div
+                        class="group relative flex flex-col overflow-hidden rounded-2xl glass-panel transition-all duration-500 hover:border-primary/30 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:-translate-y-1">
+                        <a href="project-inventory-management.html" class="block">
+                            <div class="relative h-48 w-full overflow-hidden">
+                                <div class="absolute inset-0 transition-transform duration-700 group-hover:scale-110"
+                                    style="background: linear-gradient(90deg, #4f46e5, #9333ea);"></div>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-[#0f1115] via-transparent to-transparent opacity-90">
+                                </div>
+                                <div
+                                    class="absolute top-3 right-3 rounded-full bg-black/60 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-md border border-white/10">
+                                    Retail</div>
+                            </div>
+                        </a>
+                        <div class="flex flex-1 flex-col p-6 pt-2">
+                            <div class="mb-4">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-xl">📝</span>
+                                    <h3
+                                        class="font-display text-xl font-bold text-white group-hover:text-primary transition-colors">
+                                        <a href="project-inventory-management.html">Inventory Management</a>
+                                    </h3>
+                                </div>
+                                <p class="mt-2 line-clamp-3 text-sm text-gray-400 font-light leading-relaxed">
+                                    Comprehensive multi-level sales and inventory management system
+                                    for retail/distribution businesses with field sales and regional
+                                    operations.
+                                </p>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="mb-4 flex flex-wrap gap-2">
+                                    <span
+                                        class="rounded bg-blue-500/10 border border-blue-500/20 px-2 py-1 text-[10px] font-medium text-blue-400">Asp.Net</span>
+                                    <span
+                                        class="rounded bg-purple-500/10 border border-purple-500/20 px-2 py-1 text-[10px] font-medium text-purple-400">C#</span>
+                                    <span
+                                        class="rounded bg-orange-500/10 border border-orange-500/20 px-2 py-1 text-[10px] font-medium text-orange-400">MSSQL</span>
+                                </div>
+                                <div
+                                    class="flex items-center justify-between border-t border-white/5 pt-4 text-xs text-gray-500">
+                                    <div class="flex gap-3">
+                                        <a href="#" class="hover:text-primary transition-colors"
+                                            title="View details"><span
+                                                class="material-symbols-outlined text-lg">info</span></a>
+                                        <a href="#" class="hover:text-primary transition-colors" title="Live demo"><span
+                                                class="material-symbols-outlined text-lg">open_in_new</span></a>
+                                        <a href="#" class="hover:text-primary transition-colors" title="GitHub"><span
+                                                class="material-symbols-outlined text-lg">code</span></a>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[14px]">calendar_today</span> 2023
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Network Operations & Asset Management -->
+                    <div
+                        class="group relative flex flex-col overflow-hidden rounded-2xl glass-panel transition-all duration-500 hover:border-primary/30 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:-translate-y-1">
+                        <a href="#" class="block" title="Detail page coming soon">
+                            <div class="relative h-48 w-full overflow-hidden">
+                                <div class="absolute inset-0 transition-transform duration-700 group-hover:scale-110"
+                                    style="background: linear-gradient(90deg, #0891b2, #3b82f6);"></div>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-[#0f1115] via-transparent to-transparent opacity-90">
+                                </div>
+                                <div
+                                    class="absolute top-3 right-3 rounded-full bg-black/60 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-md border border-white/10">
+                                    B2B/Telecom</div>
+                            </div>
+                        </a>
+                        <div class="flex flex-1 flex-col p-6 pt-2">
+                            <div class="mb-4">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-xl">🎬</span>
+                                    <h3
+                                        class="font-display text-xl font-bold text-white group-hover:text-primary transition-colors">
+                                        <a href="#">Network Operations</a>
+                                    </h3>
+                                </div>
+                                <p class="mt-2 line-clamp-3 text-sm text-gray-400 font-light leading-relaxed">
+                                    B2B Satellite Network Operations & Asset Management Platform for
+                                    VSAT and satellite communication systems.
+                                </p>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="mb-4 flex flex-wrap gap-2">
+                                    <span
+                                        class="rounded bg-blue-500/10 border border-blue-500/20 px-2 py-1 text-[10px] font-medium text-blue-400">Asp.Net</span>
+                                    <span
+                                        class="rounded bg-purple-500/10 border border-purple-500/20 px-2 py-1 text-[10px] font-medium text-purple-400">C#</span>
+                                    <span
+                                        class="rounded bg-green-500/10 border border-green-500/20 px-2 py-1 text-[10px] font-medium text-green-400">Node.JS</span>
+                                    <span
+                                        class="rounded bg-orange-500/10 border border-orange-500/20 px-2 py-1 text-[10px] font-medium text-orange-400">MSSQL</span>
+                                </div>
+                                <div
+                                    class="flex items-center justify-between border-t border-white/5 pt-4 text-xs text-gray-500">
+                                    <div class="flex gap-3">
+                                        <a href="#" class="hover:text-primary transition-colors"
+                                            title="View details"><span
+                                                class="material-symbols-outlined text-lg">info</span></a>
+                                        <a href="#" class="hover:text-primary transition-colors" title="Live demo"><span
+                                                class="material-symbols-outlined text-lg">open_in_new</span></a>
+                                        <a href="#" class="hover:text-primary transition-colors" title="GitHub"><span
+                                                class="material-symbols-outlined text-lg">code</span></a>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[14px]">calendar_today</span> 2023
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Datacenter Visitor Management System -->
+                    <div
+                        class="group relative flex flex-col overflow-hidden rounded-2xl glass-panel transition-all duration-500 hover:border-primary/30 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:-translate-y-1">
+                        <a href="#" class="block" title="Detail page coming soon">
+                            <div class="relative h-48 w-full overflow-hidden">
+                                <div class="absolute inset-0 transition-transform duration-700 group-hover:scale-110"
+                                    style="background: linear-gradient(90deg, #dc2626, #ec4899);"></div>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-[#0f1115] via-transparent to-transparent opacity-90">
+                                </div>
+                                <div
+                                    class="absolute top-3 right-3 rounded-full bg-black/60 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-md border border-white/10">
+                                    Security</div>
+                            </div>
+                        </a>
+                        <div class="flex flex-1 flex-col p-6 pt-2">
+                            <div class="mb-4">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-xl">📊</span>
+                                    <h3
+                                        class="font-display text-xl font-bold text-white group-hover:text-primary transition-colors">
+                                        <a href="#">Visitor Management</a>
+                                    </h3>
+                                </div>
+                                <p class="mt-2 line-clamp-3 text-sm text-gray-400 font-light leading-relaxed">
+                                    Visitor management system that enforces pre-approved access,
+                                    tracks entry/exit, and provides comprehensive audit reporting.
+                                </p>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="mb-4 flex flex-wrap gap-2">
+                                    <span
+                                        class="rounded bg-blue-500/10 border border-blue-500/20 px-2 py-1 text-[10px] font-medium text-blue-400">Asp.Net</span>
+                                    <span
+                                        class="rounded bg-purple-500/10 border border-purple-500/20 px-2 py-1 text-[10px] font-medium text-purple-400">C#</span>
+                                    <span
+                                        class="rounded bg-yellow-500/10 border border-yellow-500/20 px-2 py-1 text-[10px] font-medium text-yellow-400">JS</span>
+                                    <span
+                                        class="rounded bg-orange-500/10 border border-orange-500/20 px-2 py-1 text-[10px] font-medium text-orange-400">MSSQL</span>
+                                </div>
+                                <div
+                                    class="flex items-center justify-between border-t border-white/5 pt-4 text-xs text-gray-500">
+                                    <div class="flex gap-3">
+                                        <a href="#" class="hover:text-primary transition-colors"
+                                            title="View details"><span
+                                                class="material-symbols-outlined text-lg">info</span></a>
+                                        <a href="#" class="hover:text-primary transition-colors" title="Live demo"><span
+                                                class="material-symbols-outlined text-lg">open_in_new</span></a>
+                                        <a href="#" class="hover:text-primary transition-colors" title="GitHub"><span
+                                                class="material-symbols-outlined text-lg">code</span></a>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[14px]">calendar_today</span> 2023
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Starlink Integration Middleware -->
+                    <div
+                        class="group relative flex flex-col overflow-hidden rounded-2xl glass-panel transition-all duration-500 hover:border-primary/30 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:-translate-y-1">
+                        <a href="#" class="block" title="Detail page coming soon">
+                            <div class="relative h-48 w-full overflow-hidden">
+                                <div class="absolute inset-0 transition-transform duration-700 group-hover:scale-110"
+                                    style="background: linear-gradient(90deg, #ca8a04, #ea580c);"></div>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-[#0f1115] via-transparent to-transparent opacity-90">
+                                </div>
+                                <div
+                                    class="absolute top-3 right-3 rounded-full bg-black/60 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-md border border-white/10">
+                                    API/Middleware</div>
+                            </div>
+                        </a>
+                        <div class="flex flex-1 flex-col p-6 pt-2">
+                            <div class="mb-4">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-xl">🍳</span>
+                                    <h3
+                                        class="font-display text-xl font-bold text-white group-hover:text-primary transition-colors">
+                                        <a href="#">Starlink Middleware</a>
+                                    </h3>
+                                </div>
+                                <p class="mt-2 line-clamp-3 text-sm text-gray-400 font-light leading-relaxed">
+                                    Custom-built middleware platform designed to bridge, automate,
+                                    and unify Starlink satellite services.
+                                </p>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="mb-4 flex flex-wrap gap-2">
+                                    <span
+                                        class="rounded bg-green-500/10 border border-green-500/20 px-2 py-1 text-[10px] font-medium text-green-400">Node.JS</span>
+                                    <span
+                                        class="rounded bg-yellow-500/10 border border-yellow-500/20 px-2 py-1 text-[10px] font-medium text-yellow-400">JS</span>
+                                    <span
+                                        class="rounded bg-emerald-500/10 border border-emerald-500/20 px-2 py-1 text-[10px] font-medium text-emerald-400">NoSQL</span>
+                                    <span
+                                        class="rounded bg-orange-500/10 border border-orange-500/20 px-2 py-1 text-[10px] font-medium text-orange-400">MSSQL</span>
+                                </div>
+                                <div
+                                    class="flex items-center justify-between border-t border-white/5 pt-4 text-xs text-gray-500">
+                                    <div class="flex gap-3">
+                                        <a href="#" class="hover:text-primary transition-colors"
+                                            title="View details"><span
+                                                class="material-symbols-outlined text-lg">info</span></a>
+                                        <a href="#" class="hover:text-primary transition-colors" title="Live demo"><span
+                                                class="material-symbols-outlined text-lg">open_in_new</span></a>
+                                        <a href="#" class="hover:text-primary transition-colors" title="GitHub"><span
+                                                class="material-symbols-outlined text-lg">code</span></a>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[14px]">calendar_today</span> 2024
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Real-Time Telegram Notifications & Reporting Module -->
+                    <div
+                        class="group relative flex flex-col overflow-hidden rounded-2xl glass-panel transition-all duration-500 hover:border-primary/30 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:-translate-y-1">
+                        <a href="#" class="block" title="Detail page coming soon">
+                            <div class="relative h-48 w-full overflow-hidden">
+                                <div class="absolute inset-0 transition-transform duration-700 group-hover:scale-110"
+                                    style="background: linear-gradient(90deg, #3b82f6, #4f46e5);"></div>
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-[#0f1115] via-transparent to-transparent opacity-90">
+                                </div>
+                                <div
+                                    class="absolute top-3 right-3 rounded-full bg-black/60 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-md border border-white/10">
+                                    Communication</div>
+                            </div>
+                        </a>
+                        <div class="flex flex-1 flex-col p-6 pt-2">
+                            <div class="mb-4">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-xl">🤖</span>
+                                    <h3
+                                        class="font-display text-xl font-bold text-white group-hover:text-primary transition-colors">
+                                        <a href="#">Telegram Reporting</a>
+                                    </h3>
+                                </div>
+                                <p class="mt-2 line-clamp-3 text-sm text-gray-400 font-light leading-relaxed">
+                                    User-facing interface and automation layer built on middleware -
+                                    giving teams visibility, control, and audit trails.
+                                </p>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="mb-4 flex flex-wrap gap-2">
+                                    <span
+                                        class="rounded bg-green-500/10 border border-green-500/20 px-2 py-1 text-[10px] font-medium text-green-400">Node.JS</span>
+                                    <span
+                                        class="rounded bg-yellow-500/10 border border-yellow-500/20 px-2 py-1 text-[10px] font-medium text-yellow-400">JS</span>
+                                    <span
+                                        class="rounded bg-emerald-500/10 border border-emerald-500/20 px-2 py-1 text-[10px] font-medium text-emerald-400">NoSQL</span>
+                                    <span
+                                        class="rounded bg-orange-500/10 border border-orange-500/20 px-2 py-1 text-[10px] font-medium text-orange-400">MSSQL</span>
+                                </div>
+                                <div
+                                    class="flex items-center justify-between border-t border-white/5 pt-4 text-xs text-gray-500">
+                                    <div class="flex gap-3">
+                                        <a href="#" class="hover:text-primary transition-colors"
+                                            title="View details"><span
+                                                class="material-symbols-outlined text-lg">info</span></a>
+                                        <a href="#" class="hover:text-primary transition-colors" title="Live demo"><span
+                                                class="material-symbols-outlined text-lg">open_in_new</span></a>
+                                        <a href="#" class="hover:text-primary transition-colors" title="GitHub"><span
+                                                class="material-symbols-outlined text-lg">code</span></a>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[14px]">calendar_today</span> 2024
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="mt-8 flex justify-center pb-8">
+                    <button
+                        class="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-8 py-3 text-sm font-bold text-gray-400 transition-all hover:bg-white/10 hover:text-white hover:border-primary/40 hover:shadow-neon">
+                        <span>Load More</span>
+                        <span class="material-symbols-outlined animate-bounce">expand_more</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact" class="relative w-full py-20 contact-bg bg-background-light dark:bg-background-dark">
+            <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
+                    <div class="flex flex-col gap-10 lg:pt-4">
+                        <div class="flex flex-col gap-6">
+                            <span
+                                class="inline-flex items-center gap-2 rounded-full glass-panel px-4 py-1.5 text-xs font-semibold text-primary shadow-sm w-fit backdrop-blur-md border border-primary/20">
+                                <span class="relative flex h-2 w-2">
+                                    <span
+                                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                                </span>
+                                Open to Opportunities
+                            </span>
+                            <h1
+                                class="text-5xl sm:text-6xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.1]">
+                                Let's Build <br /> The <span
+                                    class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Future</span>
+                            </h1>
+                            <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-lg">
+                                Have an ambitious project? I'm ready to collaborate and bring your ideas to life with
+                                modern, scalable, and user-centric web solutions.
+                            </p>
+                        </div>
+                        <div class="flex flex-col gap-5 mt-2">
+                            <div
+                                class="group relative overflow-hidden rounded-2xl glass-panel p-1 hover:border-primary/50 transition-colors duration-300 shadow-glass">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                </div>
+                                <div class="relative flex items-center gap-5 p-5 z-10">
+                                    <div
+                                        class="flex items-center justify-center size-14 rounded-xl bg-gradient-to-br from-primary to-blue-600 text-white shadow-lg shadow-primary/30">
+                                        <span class="material-symbols-outlined text-[28px]">mail</span>
+                                    </div>
+                                    <div class="flex flex-col gap-0.5">
+                                        <span
+                                            class="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Email
+                                            me directly</span>
+                                        <a class="text-xl font-bold text-slate-900 dark:text-white hover:text-primary dark:hover:text-primary transition-colors flex items-center gap-2"
+                                            href="mailto:alex@example.com">
+                                            alex@example.com
+                                            <span
+                                                class="material-symbols-outlined text-sm opacity-0 -translate-x-2 group-hover:translate-x-0 group-hover:opacity-100 transition-all text-primary">arrow_outward</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-4">
+                                <a class="flex flex-col items-center justify-center gap-3 p-4 rounded-2xl glass-panel text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white hover:bg-white/40 dark:hover:bg-white/10 transition-all group hover:-translate-y-1 hover:shadow-lg"
+                                    href="#">
+                                    <span
+                                        class="material-symbols-outlined text-3xl group-hover:scale-110 transition-transform">work</span>
+                                    <span class="font-medium text-sm">LinkedIn</span>
+                                </a>
+                                <a class="flex flex-col items-center justify-center gap-3 p-4 rounded-2xl glass-panel text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white hover:bg-white/40 dark:hover:bg-white/10 transition-all group hover:-translate-y-1 hover:shadow-lg"
+                                    href="#">
+                                    <span
+                                        class="material-symbols-outlined text-3xl group-hover:scale-110 transition-transform">terminal</span>
+                                    <span class="font-medium text-sm">GitHub</span>
+                                </a>
+                                <a class="flex flex-col items-center justify-center gap-3 p-4 rounded-2xl glass-panel text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white hover:bg-white/40 dark:hover:bg-white/10 transition-all group hover:-translate-y-1 hover:shadow-lg"
+                                    href="#">
+                                    <span
+                                        class="material-symbols-outlined text-3xl group-hover:scale-110 transition-transform">chat_bubble</span>
+                                    <span class="font-medium text-sm">Twitter</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-panel rounded-3xl p-8 sm:p-10 shadow-2xl relative overflow-hidden group">
+                        <div
+                            class="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-[80px] pointer-events-none">
+                        </div>
+                        <form action="#" class="flex flex-col gap-6 relative z-10" method="POST">
+                            <div class="flex flex-col gap-2 mb-2">
+                                <h3 class="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                    Send a Message
+                                    <span
+                                        class="material-symbols-outlined text-primary animate-bounce">waving_hand</span>
+                                </h3>
+                                <p class="text-slate-500 dark:text-slate-400">Let me know how I can help. I usually
+                                    respond within 24 hours.</p>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div class="group/field">
+                                    <label
+                                        class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 ml-1 group-focus-within/field:text-primary transition-colors">Your
+                                        Name</label>
+                                    <input
+                                        class="glass-input w-full rounded-xl text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-primary/50 focus:ring-4 focus:ring-primary/10 h-14 px-4 transition-all duration-300 outline-none"
+                                        placeholder="Jane Doe" required="" type="text" />
+                                </div>
+                                <div class="group/field">
+                                    <label
+                                        class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 ml-1 group-focus-within/field:text-primary transition-colors">Email
+                                        Address</label>
+                                    <input
+                                        class="glass-input w-full rounded-xl text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-primary/50 focus:ring-4 focus:ring-primary/10 h-14 px-4 transition-all duration-300 outline-none"
+                                        placeholder="jane@company.com" required="" type="email" />
+                                </div>
+                            </div>
+                            <div class="group/field">
+                                <label
+                                    class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 ml-1 group-focus-within/field:text-primary transition-colors">Subject</label>
+                                <input
+                                    class="glass-input w-full rounded-xl text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-primary/50 focus:ring-4 focus:ring-primary/10 h-14 px-4 transition-all duration-300 outline-none"
+                                    placeholder="Project inquiry..." required="" type="text" />
+                            </div>
+                            <div class="group/field">
+                                <label
+                                    class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 ml-1 group-focus-within/field:text-primary transition-colors">Message</label>
+                                <textarea
+                                    class="glass-input w-full rounded-xl text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-primary/50 focus:ring-4 focus:ring-primary/10 min-h-[160px] p-4 resize-y transition-all duration-300 outline-none leading-relaxed"
+                                    placeholder="Tell me a bit about your project goals and timeline..."
+                                    required=""></textarea>
+                            </div>
+                            <button
+                                class="group relative flex w-full justify-center items-center gap-3 rounded-xl bg-gradient-to-r from-primary to-blue-600 py-4 px-6 text-base font-bold text-white shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:scale-[1.02] focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 active:scale-[0.98]"
+                                type="submit">
+                                <span class="relative z-10">Send Message</span>
+                                <span
+                                    class="material-symbols-outlined text-xl group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform relative z-10">send</span>
+                                <div
+                                    class="absolute inset-0 rounded-xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity">
+                                </div>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER (from About Me) -->
+    <footer
+        class="mt-auto border-t border-slate-200/50 dark:border-slate-800 bg-white/40 dark:bg-slate-900/40 backdrop-blur-md">
+        <div class="layout-container flex justify-center w-full">
+            <div
+                class="w-full max-w-[1080px] px-4 sm:px-10 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">code</span>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">© 2024 Alex.Dev. All rights
+                        reserved.</p>
+                </div>
+                <div class="flex gap-4">
+                    <a class="w-10 h-10 rounded-full flex items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-primary hover:text-white transition-all duration-300 transform hover:-translate-y-1"
+                        href="#">
+                        <span class="sr-only">Twitter</span>
+                        <svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84">
+                            </path>
+                        </svg>
+                    </a>
+                    <a class="w-10 h-10 rounded-full flex items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-black dark:hover:bg-white dark:hover:text-black hover:text-white transition-all duration-300 transform hover:-translate-y-1"
+                        href="#">
+                        <span class="sr-only">GitHub</span>
+                        <svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path clip-rule="evenodd"
+                                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                                fill-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                    <a class="w-10 h-10 rounded-full flex items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-[#0077b5] hover:text-white transition-all duration-300 transform hover:-translate-y-1"
+                        href="#">
+                        <span class="sr-only">LinkedIn</span>
+                        <svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path clip-rule="evenodd"
+                                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
+                                fill-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

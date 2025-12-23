@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Alex.Dev - Real Estate Sales System</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3b82f6",
+                        "primary-glow": "#60a5fa",
+                        "glass-border": "rgba(255, 255, 255, 0.08)",
+                        "glass-surface": "rgba(17, 24, 39, 0.7)",
+                        "background-dark": "#0f1115",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Inter", "sans-serif"]
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'tech-grid': "linear-gradient(to right, #1f2937 1px, transparent 1px), linear-gradient(to bottom, #1f2937 1px, transparent 1px)"
+                    },
+                    boxShadow: {
+                        'neon': '0 0 5px theme("colors.primary"), 0 0 20px theme("colors.primary-glow")',
+                        'glass': '0 4px 30px rgba(0, 0, 0, 0.1)',
+                    }
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .glass-panel {
+                @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-glass;
+            }
+            .glass-card {
+                @apply bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg border border-white/10 shadow-lg hover:border-primary/30 hover:shadow-neon transition-all duration-300;
+            }
+            .tech-text-glow {
+                text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            }
+        }.bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-dark font-body text-gray-300 antialiased selection:bg-primary selection:text-white min-h-screen relative">
+    <div class="fixed inset-0 z-0 pointer-events-none">
+        <div class="absolute inset-0 bg-background-dark"></div>
+        <div class="absolute inset-0 bg-grid-pattern"></div>
+        <div
+            class="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[128px] mix-blend-screen opacity-40">
+        </div>
+        <div
+            class="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-[128px] mix-blend-screen opacity-40">
+        </div>
+    </div>
+    <div class="relative z-10 flex min-h-screen w-full flex-col overflow-x-hidden">
+        <header class="sticky top-0 z-50 w-full border-b border-white/5 bg-[#0f1115]/80 backdrop-blur-md">
+            <div class="flex w-full justify-center">
+                <div class="flex w-full max-w-[1200px] flex-col">
+                    <div class="flex items-center justify-between px-6 py-4">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="flex h-8 w-8 items-center justify-center rounded bg-gradient-to-br from-primary to-purple-600 text-white shadow-neon">
+                                <span class="font-display font-bold text-lg">A</span>
+                            </div>
+                            <h2 class="font-display text-xl font-bold tracking-tight text-white">Alex.Dev</h2>
+                        </div>
+                        <div class="hidden flex-1 justify-end gap-8 md:flex items-center">
+                            <nav class="flex items-center gap-8">
+                                <a class="group inline-flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-white transition-colors hover:tech-text-glow"
+                                    href="index.html#projects">
+                                    <span
+                                        class="material-symbols-outlined text-lg group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                                    Back to Projects
+                                </a>
+                            </nav>
+                            <button
+                                class="relative group overflow-hidden rounded-md bg-white/5 px-5 py-2 transition-all hover:bg-white/10 hover:shadow-neon hover:border-primary/50 border border-white/10">
+                                <div
+                                    class="absolute inset-0 w-0 bg-gradient-to-r from-primary/20 to-purple-500/20 transition-all duration-[250ms] ease-out group-hover:w-full">
+                                </div>
+                                <span
+                                    class="relative text-sm font-bold text-white tracking-wide uppercase font-display">Hire
+                                    Me</span>
+                            </button>
+                        </div>
+                        <div class="flex md:hidden text-white">
+                            <span class="material-symbols-outlined">menu</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="flex flex-1 flex-col items-center px-6 py-12">
+            <div class="flex w-full max-w-[1200px] flex-col gap-12">
+
+                <div class="glass-panel rounded-3xl p-8 md:p-12 relative overflow-hidden group">
+                    <div
+                        class="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2">
+                    </div>
+                    <div class="relative z-10 flex flex-col md:flex-row gap-8 items-start justify-between">
+                        <div class="flex flex-col gap-4">
+                            <div class="flex flex-wrap gap-3">
+                                <span
+                                    class="px-3 py-1 rounded-full text-xs font-semibold bg-primary/20 text-primary border border-primary/30 uppercase tracking-wide">Desktop
+                                    Application</span>
+                                <span
+                                    class="px-3 py-1 rounded-full text-xs font-semibold bg-purple-500/20 text-purple-400 border border-purple-500/30 uppercase tracking-wide">Real
+                                    Estate</span>
+                                <span
+                                    class="px-3 py-1 rounded-full text-xs font-semibold bg-white/10 text-gray-300 border border-white/10 uppercase tracking-wide">2024</span>
+                            </div>
+                            <h1
+                                class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight">
+                                Real Estate <span
+                                    class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-400">Sales
+                                    System</span>
+                            </h1>
+                            <p class="text-lg text-gray-400 font-light leading-relaxed max-w-xl">
+                                Comprehensive desktop application to streamline property sales, manage customer
+                                relationships, tracking payments, and generate detailed financial reports.
+                            </p>
+                            <div class="flex flex-wrap gap-4 mt-4">
+                                <button
+                                    class="relative group overflow-hidden rounded-lg bg-primary px-6 py-3 transition-all hover:shadow-neon hover:scale-105 active:scale-95">
+                                    <div
+                                        class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700">
+                                    </div>
+                                    <span class="relative flex items-center gap-2 font-bold text-white">
+                                        <span class="material-symbols-outlined">rocket_launch</span>
+                                        Live Demo
+                                    </span>
+                                </button>
+                                <button
+                                    class="rounded-lg border border-white/20 bg-white/5 px-6 py-3 font-semibold text-white transition-all hover:bg-white/10 hover:border-white/40 flex items-center gap-2 group/code">
+                                    <span
+                                        class="material-symbols-outlined group-hover/code:rotate-12 transition-transform">code</span>
+                                    View Code
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 flex flex-col gap-8">
+                        <section class="glass-panel rounded-2xl p-8">
+                            <h3 class="font-display text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary">analytics</span>
+                                Project Overview
+                            </h3>
+
+                            <!-- Problem vs Solution Table -->
+                            <div class="overflow-x-auto mb-8 rounded-xl border border-white/10 bg-white/5">
+                                <table class="w-full text-left border-collapse">
+                                    <thead>
+                                        <tr class="border-b border-white/10 bg-white/5">
+                                            <th class="py-4 px-6 font-bold text-white w-1/2">The Problem</th>
+                                            <th class="py-4 px-6 font-bold text-primary w-1/2">Our Solution</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-sm text-gray-400">
+                                        <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                                            <td class="py-4 px-6 align-top">
+                                                <div class="flex gap-2">
+                                                    <span
+                                                        class="material-symbols-outlined text-red-400 shrink-0 text-base mt-0.5">close</span>
+                                                    <span>Manual listing & status tracking.</span>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-6 text-white align-top">
+                                                <div class="flex gap-2">
+                                                    <span
+                                                        class="material-symbols-outlined text-green-400 shrink-0 text-base mt-0.5">check</span>
+                                                    <span>Centralized property lifecycle database.</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                                            <td class="py-4 px-6 align-top">
+                                                <div class="flex gap-2">
+                                                    <span
+                                                        class="material-symbols-outlined text-red-400 shrink-0 text-base mt-0.5">close</span>
+                                                    <span>Lost leads due to poor follow-up.</span>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-6 text-white align-top">
+                                                <div class="flex gap-2">
+                                                    <span
+                                                        class="material-symbols-outlined text-green-400 shrink-0 text-base mt-0.5">check</span>
+                                                    <span>Automated sales tracking & reminders.</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="hover:bg-white/5 transition-colors">
+                                            <td class="py-4 px-6 align-top">
+                                                <div class="flex gap-2">
+                                                    <span
+                                                        class="material-symbols-outlined text-red-400 shrink-0 text-base mt-0.5">close</span>
+                                                    <span>Errors in booking fees & receipts.</span>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-6 text-white align-top">
+                                                <div class="flex gap-2">
+                                                    <span
+                                                        class="material-symbols-outlined text-green-400 shrink-0 text-base mt-0.5">check</span>
+                                                    <span>Digital payment processing & receipts.</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Key Outcomes -->
+                            <div class="mb-10">
+                                <h4 class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">What We
+                                    Achieved</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="glass-card rounded-lg p-4 border-l-4 border-primary bg-primary/5">
+                                        <h5 class="font-bold text-white mb-1">Optimized Sales</h5>
+                                        <p class="text-xs text-gray-400">30% increase in lead conversion through better
+                                            tracking.</p>
+                                    </div>
+                                    <div class="glass-card rounded-lg p-4 border-l-4 border-green-500 bg-green-500/5">
+                                        <h5 class="font-bold text-white mb-1">Data Integrity</h5>
+                                        <p class="text-xs text-gray-400">Eliminated pricing & commission errors
+                                            completely.</p>
+                                    </div>
+                                    <div class="glass-card rounded-lg p-4 border-l-4 border-purple-500 bg-purple-500/5">
+                                        <h5 class="font-bold text-white mb-1">Faster Closings</h5>
+                                        <p class="text-xs text-gray-400">Streamlined documentation reduced closing time
+                                            by 50%.</p>
+                                    </div>
+                                    <div class="glass-card rounded-lg p-4 border-l-4 border-orange-500 bg-orange-500/5">
+                                        <h5 class="font-bold text-white mb-1">Better Forecasting</h5>
+                                        <p class="text-xs text-gray-400">Real-time dashboards provide accurate revenue
+                                            projections.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h4 class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Key Metrics</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div
+                                    class="bg-white/5 rounded-xl p-4 border border-white/5 text-center hover:border-primary/30 transition-colors group">
+                                    <div
+                                        class="text-3xl font-display font-bold text-primary mb-1 group-hover:scale-110 transition-transform">
+                                        100%</div>
+                                    <div class="text-xs text-gray-500 uppercase tracking-wider">Property Management
+                                    </div>
+                                </div>
+                                <div
+                                    class="bg-white/5 rounded-xl p-4 border border-white/5 text-center hover:border-purple-500/30 transition-colors group">
+                                    <div
+                                        class="text-3xl font-display font-bold text-purple-400 mb-1 group-hover:scale-110 transition-transform">
+                                        50%</div>
+                                    <div class="text-xs text-gray-500 uppercase tracking-wider">Faster Processing</div>
+                                </div>
+                                <div
+                                    class="bg-white/5 rounded-xl p-4 border border-white/5 text-center hover:border-green-500/30 transition-colors group">
+                                    <div
+                                        class="text-3xl font-display font-bold text-green-400 mb-1 group-hover:scale-110 transition-transform">
+                                        Real-time</div>
+                                    <div class="text-xs text-gray-500 uppercase tracking-wider">Sales Analytics</div>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="glass-panel rounded-2xl p-8">
+                            <h3 class="font-display text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary">perm_media</span>
+                                Application Views
+                            </h3>
+
+                            <!-- Carousel Container -->
+                            <div class="relative w-full aspect-video rounded-xl overflow-hidden glass-card group/carousel"
+                                id="carousel-container">
+                                <!-- Main Image -->
+                                <div class="w-full h-full relative">
+                                    <div class="absolute inset-0 bg-black/40 z-0"></div>
+                                    <!-- Dimmer background for fit -->
+                                    <img id="carousel-image"
+                                        src="screenshots/real_estate_sales_system/Input Pembayaran.png"
+                                        alt="Application Screenshot"
+                                        class="w-full h-full object-contain relative z-10 transition-opacity duration-300" />
+
+                                    <!-- Caption Overlay -->
+                                    <div
+                                        class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 to-transparent z-20">
+                                        <p id="carousel-caption" class="text-white font-medium text-lg">Payment Entry
+                                        </p>
+                                        <p id="carousel-counter" class="text-gray-400 text-xs mt-1">1 / 6</p>
+                                    </div>
+                                </div>
+
+                                <!-- Navigation Buttons -->
+                                <button onclick="prevSlide()"
+                                    class="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-black/50 hover:bg-primary/80 text-white flex items-center justify-center backdrop-blur-md border border-white/10 transition-all opacity-0 group-hover/carousel:opacity-100">
+                                    <span class="material-symbols-outlined">chevron_left</span>
+                                </button>
+                                <button onclick="nextSlide()"
+                                    class="absolute right-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-black/50 hover:bg-primary/80 text-white flex items-center justify-center backdrop-blur-md border border-white/10 transition-all opacity-0 group-hover/carousel:opacity-100">
+                                    <span class="material-symbols-outlined">chevron_right</span>
+                                </button>
+                            </div>
+
+                            <!-- Thumbnails Grid -->
+                            <div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-3 mt-6" id="thumbnail-strip">
+                                <!-- Thumbnails will be injected by JS -->
+                            </div>
+
+                            <script>
+                                const images = [
+                                    { src: "screenshots/real_estate_sales_system/Input Pembayaran.png", title: "Payment Entry" },
+                                    { src: "screenshots/real_estate_sales_system/Tambah Rumah.png", title: "Add Property" },
+                                    { src: "screenshots/real_estate_sales_system/Buat Booking Fee.png", title: "Booking Fee" },
+                                    { src: "screenshots/real_estate_sales_system/Laporan Status Konsumen.png", title: "Customer Status" },
+                                    { src: "screenshots/real_estate_sales_system/Print Kwitansi Pembayaran.png", title: "Payment Receipt" },
+                                    { src: "screenshots/real_estate_sales_system/Notifikasi.png", title: "System Notifications" }
+                                ];
+
+                                let currentIndex = 0;
+                                const carouselImage = document.getElementById('carousel-image');
+                                const carouselCaption = document.getElementById('carousel-caption');
+                                const carouselCounter = document.getElementById('carousel-counter');
+                                const thumbnailStrip = document.getElementById('thumbnail-strip');
+
+                                function updateCarousel() {
+                                    // Update styling for fade effect
+                                    carouselImage.classList.add('opacity-0');
+
+                                    setTimeout(() => {
+                                        const current = images[currentIndex];
+                                        carouselImage.src = current.src;
+                                        carouselCaption.textContent = current.title;
+                                        carouselCounter.textContent = `${currentIndex + 1} / ${images.length}`;
+                                        carouselImage.classList.remove('opacity-0');
+
+                                        // Update active thumbnail
+                                        document.querySelectorAll('.thumbnail').forEach((thumb, idx) => {
+                                            if (idx === currentIndex) {
+                                                thumb.classList.add('border-primary', 'opacity-100', 'ring-2', 'ring-primary/20');
+                                                thumb.classList.remove('border-white/10', 'opacity-60', 'hover:opacity-100', 'hover:scale-105');
+                                            } else {
+                                                thumb.classList.remove('border-primary', 'opacity-100', 'ring-2', 'ring-primary/20');
+                                                thumb.classList.add('border-white/10', 'opacity-60', 'hover:opacity-100', 'hover:scale-105');
+                                            }
+                                        });
+                                    }, 150);
+                                }
+
+                                function nextSlide() {
+                                    currentIndex = (currentIndex + 1) % images.length;
+                                    updateCarousel();
+                                }
+
+                                function prevSlide() {
+                                    currentIndex = (currentIndex - 1 + images.length) % images.length;
+                                    updateCarousel();
+                                }
+
+                                // Initialize Thumbnails
+                                images.forEach((img, idx) => {
+                                    const thumbBtn = document.createElement('button');
+                                    thumbBtn.className = `thumbnail w-full aspect-video rounded-lg overflow-hidden border-2 transition-all duration-300 cursor-pointer object-cover ${idx === 0 ? 'border-primary opacity-100 ring-2 ring-primary/20' : 'border-white/10 opacity-60 hover:opacity-100 hover:scale-105'}`;
+                                    thumbBtn.innerHTML = `<img src="${img.src}" class="w-full h-full object-cover">`;
+                                    thumbBtn.onclick = () => {
+                                        currentIndex = idx;
+                                        updateCarousel();
+                                    };
+                                    thumbnailStrip.appendChild(thumbBtn);
+                                });
+                            </script>
+                        </section>
+                    </div>
+                    <div class="flex flex-col gap-8">
+                        <section class="glass-panel rounded-2xl p-6">
+                            <h3 class="font-display text-xl font-bold text-white mb-6">Core Features</h3>
+                            <div class="flex flex-col gap-4">
+                                <div class="glass-card rounded-lg p-4 flex gap-4 items-start">
+                                    <div class="bg-primary/20 p-2 rounded-lg text-primary">
+                                        <span class="material-symbols-outlined">home</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-sm font-bold text-white">Property Management</h4>
+                                        <p class="text-xs text-gray-400 mt-1">Add, update, and manage housing unit
+                                            listings.</p>
+                                    </div>
+                                </div>
+                                <div class="glass-card rounded-lg p-4 flex gap-4 items-start">
+                                    <div class="bg-purple-500/20 p-2 rounded-lg text-purple-400">
+                                        <span class="material-symbols-outlined">receipt_long</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-sm font-bold text-white">Sales Processing</h4>
+                                        <p class="text-xs text-gray-400 mt-1">Handle booking fees, payments, and receipt
+                                            generation.</p>
+                                    </div>
+                                </div>
+                                <div class="glass-card rounded-lg p-4 flex gap-4 items-start">
+                                    <div class="bg-green-500/20 p-2 rounded-lg text-green-400">
+                                        <span class="material-symbols-outlined">people</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-sm font-bold text-white">Customer Tracking</h4>
+                                        <p class="text-xs text-gray-400 mt-1">Monitor buyer status from initial interest
+                                            to final sale.</p>
+                                    </div>
+                                </div>
+                                <div class="glass-card rounded-lg p-4 flex gap-4 items-start">
+                                    <div class="bg-orange-500/20 p-2 rounded-lg text-orange-400">
+                                        <span class="material-symbols-outlined">print</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-sm font-bold text-white">Document Generation</h4>
+                                        <p class="text-xs text-gray-400 mt-1">Automatically create professional invoices
+                                            and memos.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="glass-panel rounded-2xl p-6">
+                            <h3 class="font-display text-xl font-bold text-white mb-6">Tech Stack</h3>
+                            <div class="space-y-6">
+                                <div>
+                                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">
+                                        Desktop Dev</h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span
+                                            class="bg-blue-900/30 text-blue-300 border border-blue-500/30 px-3 py-1.5 rounded-md text-xs font-medium flex items-center gap-1.5">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span> VB.NET
+                                        </span>
+                                        <span
+                                            class="bg-purple-900/30 text-purple-300 border border-purple-500/30 px-3 py-1.5 rounded-md text-xs font-medium flex items-center gap-1.5">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span> C#
+                                        </span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">
+                                        Database</h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span
+                                            class="bg-red-900/30 text-red-300 border border-red-500/30 px-3 py-1.5 rounded-md text-xs font-medium flex items-center gap-1.5">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-red-400"></span> MSSQL
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <div class="p-4 rounded-xl border border-white/5 bg-white/[0.02]">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs text-gray-500">Client</span>
+                                <span class="text-sm text-gray-300 font-medium">Real Estate Dev</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs text-gray-500">Timeline</span>
+                                <span class="text-sm text-gray-300 font-medium">3 Months</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-gray-500">Role</span>
+                                <span class="text-sm text-gray-300 font-medium">Desktop Engineer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="w-full glass-panel rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-6 border border-primary/20 bg-gradient-to-r from-primary/5 to-transparent">
+                    <div class="flex flex-col gap-2">
+                        <span class="text-xs text-primary font-bold uppercase tracking-widest">Next Project</span>
+                        <h3 class="text-2xl font-display font-bold text-white">School Academic System</h3>
+                    </div>
+                    <a class="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-2.5 text-sm font-semibold text-white transition-all hover:bg-white/10 hover:pr-8 hover:border-primary/50 group"
+                        href="project-school-academic.html">
+                        View Project
+                        <span
+                            class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+        </main>
+        <footer class="border-t border-white/5 bg-[#0f1115] py-10 relative z-10">
+            <div
+                class="mx-auto flex w-full max-w-[1200px] flex-col gap-6 px-6 md:flex-row md:items-center md:justify-between">
+                <div class="flex flex-col gap-2">
+                    <div class="flex items-center gap-2 text-white">
+                        <div class="flex h-6 w-6 items-center justify-center rounded bg-primary/20 text-primary">
+                            <span class="font-display font-bold text-xs">A</span>
+                        </div>
+                        <span class="text-base font-bold font-display">Alex.Dev</span>
+                    </div>
+                    <p class="text-sm text-gray-500">© 2024 Alex Developer. All rights reserved.</p>
+                </div>
+                <div class="flex gap-6">
+                    <a class="text-gray-500 hover:text-white transition-colors hover:shadow-neon rounded-full p-1"
+                        href="#">
+                        <span class="sr-only">GitHub</span>
+                        <span class="material-symbols-outlined">code</span>
+                    </a>
+                    <a class="text-gray-500 hover:text-white transition-colors hover:shadow-neon rounded-full p-1"
+                        href="#">
+                        <span class="sr-only">LinkedIn</span>
+                        <span class="material-symbols-outlined">group</span>
+                    </a>
+                    <a class="text-gray-500 hover:text-white transition-colors hover:shadow-neon rounded-full p-1"
+                        href="#">
+                        <span class="sr-only">Twitter</span>
+                        <span class="material-symbols-outlined">chat</span>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>
